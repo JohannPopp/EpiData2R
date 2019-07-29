@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<EpiData xmlns="http://www.epidata.dk/XML/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.epidata.dk/XML/2.1 http://www.epidata.dk/XML/2.1/epx.xsd" version="6" xml:lang="en" dateSeparator="/" decimalSeparator="," timeSeparator="." cycle="2">
+  <Settings dateSeparator="/" timeSeparator="." decimalSeparator=","/>
+  <ProjectSettings autoIncStart="1" timedBackupInterval="10" backupOnShutdown="true" showFieldNames="false" showFieldBorders="true"/>
+  <StudyInfo>
+    <Abstract>
+      <Text xml:lang="en">Anhand dieses Beispielprojektes erkläre ich das Arbeiten mit EpiData</Text>
+    </Abstract>
+    <GeographicalCoverage>
+      <Text xml:lang="en">Hamburg</Text>
+    </GeographicalCoverage>
+    <Title>
+      <Text xml:lang="en">Beispielprojekt</Text>
+    </Title>
+    <UnitOfObservation>
+      <Text xml:lang="en">Eine Person</Text>
+    </UnitOfObservation>
+    <Author>Johann Popp</Author>
+    <Agency/>
+    <Created>2019/05/21 20.20.55</Created>
+    <Identifier/>
+    <Keywords/>
+    <Modified>2019/05/21 20.20.55</Modified>
+    <Notes/>
+    <Version>1</Version>
+  </StudyInfo>
+  <ValueLabelSets>
+    <ValueLabelSet id="_alterLabels" type="ftInteger" scope="vlsInternal">
+      <ValueLabel missing="true" order="2" value="-1">
+        <Label xml:lang="en">keine Angabe</Label>
+      </ValueLabel>
+    </ValueLabelSet>
+    <ValueLabelSet id="_geschlecht" type="ftInteger" scope="vlsInternal">
+      <ValueLabel order="2" value="1">
+        <Label xml:lang="en">weiblich</Label>
+      </ValueLabel>
+      <ValueLabel order="3" value="2">
+        <Label xml:lang="en">männlich</Label>
+      </ValueLabel>
+      <ValueLabel order="4" value="3">
+        <Label xml:lang="en">anderes</Label>
+      </ValueLabel>
+      <ValueLabel missing="true" order="5" value="-2">
+        <Label xml:lang="en">keine Angabe</Label>
+      </ValueLabel>
+      <ValueLabel missing="true" order="6" value="-3">
+        <Label xml:lang="en">nicht anwendbar</Label>
+      </ValueLabel>
+    </ValueLabelSet>
+    <ValueLabelSet id="_janein" type="ftInteger" scope="vlsInternal">
+      <ValueLabel order="2" value="1">
+        <Label xml:lang="en">ja</Label>
+      </ValueLabel>
+      <ValueLabel order="3" value="2">
+        <Label xml:lang="en">nein</Label>
+      </ValueLabel>
+      <ValueLabel missing="true" order="4" value="-1">
+        <Label xml:lang="en">keine Angabe</Label>
+      </ValueLabel>
+    </ValueLabelSet>
+    <ValueLabelSet id="_katText" type="ftString" scope="vlsInternal">
+      <ValueLabel order="2" value="w">
+        <Label xml:lang="en">wieso</Label>
+      </ValueLabel>
+      <ValueLabel order="3" value="a">
+        <Label xml:lang="en">achso</Label>
+      </ValueLabel>
+      <ValueLabel missing="true" order="4" value="ka">
+        <Label xml:lang="en">keine Angabe</Label>
+      </ValueLabel>
+    </ValueLabelSet>
+  </ValueLabelSets>
+  <DataFiles>
+    <DataFile id="ds1" created="2019/05/21 20.20.55" modified="2019/06/16 17.04.09" version="" afterRecordState="arsNewRecord">
+      <Caption>
+        <Text xml:lang="en">Dataset 1</Text>
+      </Caption>
+      <Sections>
+        <Section id="MAIN" top="0" left="0" width="0" height="0">
+          <Fields>
+            <Field id="ID" top="56" left="134" type="ftAutoInc" length="6" decimals="0" entryMode="emDefault" showValueLabel="true">
+              <Question>
+                <Text xml:lang="en">Index</Text>
+              </Question>
+            </Field>
+            <Field id="Alter" top="89" left="134" type="ftInteger" length="3" decimals="0" entryMode="emMustEnter" showValueLabel="true" valueLabelRef="_alterLabels">
+              <Question>
+                <Text xml:lang="en">Alter (Jahre)</Text>
+              </Question>
+              <Ranges>
+                <Range start="0" end="150"/>
+              </Ranges>
+            </Field>
+            <Field id="gebDatum" top="122" left="134" type="ftDMYDate" length="10" decimals="0" entryMode="emDefault" showValueLabel="true">
+              <Question>
+                <Text xml:lang="en">Geburtsdatum</Text>
+              </Question>
+              <Ranges>
+                <Range start="01/01/1880" end="31/12/2025"/>
+              </Ranges>
+            </Field>
+            <Field id="autoDateDMY" top="132" left="347" type="ftDMYAuto" length="10" decimals="0" entryMode="emDefault" showValueLabel="true" autoUpdateMode="umUpdated">
+              <Question>
+                <Text xml:lang="en">autoDateDMY</Text>
+              </Question>
+            </Field>
+            <Field id="geschlecht" top="155" left="134" type="ftInteger" length="2" decimals="0" entryMode="emDefault" showValueLabel="true" valueLabelRef="_geschlecht">
+              <Question>
+                <Text xml:lang="en">Geschlecht</Text>
+              </Question>
+              <Jumps>
+                <Jump on="2" type="jtToField" reset="jrLeaveAsIs" toFieldRef="groesse"/>
+              </Jumps>
+            </Field>
+            <Field id="groesse" top="188" left="134" type="ftInteger" length="3" decimals="0" entryMode="emDefault" showValueLabel="true">
+              <Question>
+                <Text xml:lang="en">Größe (cm)</Text>
+              </Question>
+            </Field>
+            <Field id="gewicht" top="221" left="134" type="ftFloat" length="8" decimals="2" entryMode="emDefault" showValueLabel="true">
+              <Question>
+                <Text xml:lang="en">Gewicht (kg)</Text>
+              </Question>
+            </Field>
+            <Field id="bemerkungen" top="274" left="134" type="ftMemo" length="20" decimals="0" entryMode="emDefault" showValueLabel="true" width="348" height="40">
+              <Question>
+                <Text xml:lang="en">Bemerkungen</Text>
+              </Question>
+            </Field>
+            <Field id="Text" top="349" left="155" type="ftString" length="20" decimals="0" entryMode="emDefault" showValueLabel="true">
+              <Question>
+                <Text xml:lang="en">Noch ein Textfeld</Text>
+              </Question>
+            </Field>
+            <Field id="katText" top="382" left="163" type="ftString" length="20" decimals="0" entryMode="emDefault" showValueLabel="true" valueLabelRef="_katText">
+              <Question>
+                <Text xml:lang="en">kategorische Textvariable</Text>
+              </Question>
+            </Field>
+            <Field id="exponiert" top="423" left="163" type="ftInteger" length="2" decimals="0" entryMode="emDefault" showValueLabel="true" valueLabelRef="_janein">
+              <Question>
+                <Text xml:lang="en">Exponiert</Text>
+              </Question>
+            </Field>
+            <Field id="outcome" top="475" left="174" type="ftInteger" length="2" decimals="0" entryMode="emDefault" showValueLabel="true" valueLabelRef="_janein">
+              <Question>
+                <Text xml:lang="en">krank</Text>
+              </Question>
+            </Field>
+            <Field id="bool" top="518" left="134" type="ftBoolean" length="1" decimals="0" entryMode="emDefault" showValueLabel="true">
+              <Question>
+                <Text xml:lang="en">logische variable</Text>
+              </Question>
+            </Field>
+            <Field id="time1" top="548" left="134" type="ftTime" length="8" decimals="0" entryMode="emDefault" showValueLabel="true">
+              <Question>
+                <Text xml:lang="en">Zeitvariable</Text>
+              </Question>
+            </Field>
+            <Field id="autoTime" top="548" left="363" type="ftTimeAuto" length="8" decimals="0" entryMode="emDefault" showValueLabel="true" autoUpdateMode="umUpdated">
+              <Question>
+                <Text xml:lang="en">autoTime</Text>
+              </Question>
+            </Field>
+            <Field id="datumMDY" top="576" left="163" type="ftMDYDate" length="10" decimals="0" entryMode="emDefault" showValueLabel="true">
+              <Question>
+                <Text xml:lang="en">Datum Amerikanisch</Text>
+              </Question>
+            </Field>
+            <Field id="autoDateMDY" top="576" left="390" type="ftMDYAuto" length="10" decimals="0" entryMode="emDefault" showValueLabel="true" autoUpdateMode="umUpdated">
+              <Question>
+                <Text xml:lang="en">autoDateMDY</Text>
+              </Question>
+            </Field>
+            <Field id="datumYMD" top="606" left="134" type="ftYMDDate" length="10" decimals="0" entryMode="emDefault" showValueLabel="true">
+              <Question>
+                <Text xml:lang="en">DatumYMD</Text>
+              </Question>
+            </Field>
+            <Field id="autoDateYMD" top="613" left="387" type="ftYMDAuto" length="10" decimals="0" entryMode="emDefault" showValueLabel="true" autoUpdateMode="umUpdated">
+              <Question>
+                <Text xml:lang="en">autoDateYMD</Text>
+              </Question>
+            </Field>
+            <Field id="upcase" top="635" left="120" type="ftUpperString" length="20" decimals="0" entryMode="emDefault" showValueLabel="true">
+              <Question>
+                <Text xml:lang="en">uppercase</Text>
+              </Question>
+            </Field>
+          </Fields>
+          <Headings>
+            <Heading id="H1" top="5" left="134" type="htH1">
+              <Caption>
+                <Text xml:lang="en">Beispieldatenmaske</Text>
+              </Caption>
+            </Heading>
+          </Headings>
+        </Section>
+      </Sections>
+      <Records modified="2019/06/16 17.04.09" encryptedSalt="">
+        <Record status="rsNormal">ID=1;Alter=65;gebDatum=12/04/1954;autoDateDMY=16/06/2019;geschlecht=2;gewicht=78;bemerkungen="Keine Bemerkungen";Text="Hier steht etwas dri";katText="w";exponiert=1;outcome=2;bool=Y;time1=17.00.00;autoTime=17.03.14;datumMDY=07/13/2019;autoDateMDY=06/16/2019;datumYMD=1920/02/29;autoDateYMD=2019/06/16;upcase="WIENFO"</Record>
+        <Record status="rsDeleted">ID=2;Alter=22;gebDatum=03/06/1997;autoDateDMY=16/06/2019;geschlecht=-3;groesse=160;gewicht=52;Text="Inhalt";exponiert=1;outcome=-1;bool=N;time1=08.30.00;autoTime=17.04.09;datumMDY=04/04/2019;autoDateMDY=06/16/2019;datumYMD=1874/12/13;autoDateYMD=2019/06/16;upcase="SO GEHT DAS"</Record>
+        <Record status="rsNormal">ID=3;Alter=18;gebDatum=20/11/2000;geschlecht=-2;groesse=172;gewicht=60;bemerkungen="Ich sage hier; dies und; das";katText="a";exponiert=-1;outcome=1</Record>
+        <Record status="rsNormal">ID=4;Alter=39;gebDatum=20/02/1980;geschlecht=2;groesse=170;gewicht=81;Text="noch ein Inhalt";katText="ka";exponiert=2;outcome=2;bool=N</Record>
+      </Records>
+    </DataFile>
+  </DataFiles>
+  <DataFileRelations>
+    <DataFileRelation id="relation_id_1" dataFileRef="ds1"/>
+  </DataFileRelations>
+</EpiData>
