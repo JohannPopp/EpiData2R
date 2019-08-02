@@ -4,7 +4,7 @@
 
 # Johann Popp
 # 2019-06-08
-# Last update: 2019-07-25
+# Last update: 2019-08-02
 ###########################################
 
 epx.extract <- function(x){
@@ -23,6 +23,12 @@ epx.extract <- function(x){
       xml2::xml_attr(xml2::xml_parent(xml2::xml_parent(x)), "dataFileRef")
     }
   )
+  infoKeyVars <- lapply(
+    lapply(
+      xml2::xml_find_all(epx, "//KeyFields"), 
+      function(x) xml2::xml_attr(xml2::xml_children(x), "fieldRef")), 
+    paste, collapse = ";;")
+
 
   
 
@@ -57,13 +63,13 @@ epx.extract <- function(x){
     infoSeparators <- infoSeparators
     
     # Key variables
-    keyVars <- xml2::xml_attr(xml2::xml_find_all(df,  ".//Key"), "fieldRef")
+    # keyVars <- xml2::xml_attr(xml2::xml_find_all(df,  ".//Key"), "fieldRef")
 
 
     # Gather information in a list
     list(records = records, datFields = datFields, fieldNames = fieldNames, fieldLabels = fieldLabels, 
          fieldTypes = fieldTypes, fieldValLabSets = fieldValLabSets, valLabelSets = valLabelSets,
-         valLabels = valLabels, infoSeparators = infoSeparators, keyVars = keyVars)
+         valLabels = valLabels, infoSeparators = infoSeparators)
     
   }
 
@@ -77,7 +83,7 @@ epx.extract <- function(x){
   # Gather information in a list
   list(epx = epx, infoEpiData = infoEpiData, infoStudy = infoStudy, infoSeparators = infoSeparators,
        infoDataSets = infoDataSets, infoParentDataSet = infoParentDataSet,
-       perDataSet = perDataSet)
+       perDataSet = perDataSet, infoKeyVars = infoKeyVars)
 }
 
 

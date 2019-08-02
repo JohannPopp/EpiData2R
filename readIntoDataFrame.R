@@ -3,7 +3,7 @@
 
 # Johann Popp
 # 2019-06-23
-# Last update: 2019-07-25
+# Last update: 2019-08-02
 ###########################################
 
 epx.read <- function(x){
@@ -51,8 +51,7 @@ epx.read <- function(x){
  
   # Include variable labels
   attributes(dat)$variable.labels <- fieldLabels
-  # Attach key variable information
-  attributes(dat)$key.variables <- x$keyVars
+
 
   dat} else {"This data frame has no entries."}
 }

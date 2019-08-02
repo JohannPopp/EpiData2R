@@ -144,9 +144,9 @@ epx.class <- function(x, info){
   dat[, fieldTypes == "ftBoolean"] <- 
     dat[, fieldTypes == "ftBoolean"] == "Y"
   
-  # Reassign variable labels and key variable information
+  # Reassign variable labels
   attributes(dat)$variable.labels <- info$fieldLabels
-  attributes(dat)$key.variables <- x$keyVars
+
   
   
   dat

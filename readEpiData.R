@@ -18,7 +18,7 @@
 
 # Johann Popp
 # 2019-06-16
-# Last update: 2019-07-25
+# Last update: 2019-08-02
 ###########################################
 
 read.EpiData <- function(x, raw.data = FALSE){
@@ -59,7 +59,8 @@ read.EpiData <- function(x, raw.data = FALSE){
   if(length(dat) > 1){
     attributes(dat2)$info.relations <- 
       data.frame(data.set = xml2::xml_attr(info$infoDataSets, "id"),
-                 parent.data.set = unlist(info$infoParentDataSet))
+                 parent.data.set = unlist(info$infoParentDataSet),
+                 key.vars = unlist(info$infoKeyVars))
   }
 
   dat2
