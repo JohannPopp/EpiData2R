@@ -60,7 +60,7 @@ read.EpiData <- function(x, raw.data = FALSE){
     attributes(dat2)$info.relations <- 
       data.frame(data.set = xml2::xml_attr(info$infoDataSets, "id"),
                  parent.data.set = unlist(info$infoParentDataSet),
-                 key.vars = unlist(info$infoKeyVars))
+                 key.variables = unlist(info$infoKeyVars))
   }
 
   dat2
