@@ -20,10 +20,8 @@
 
 # Johann Popp
 # 2019-06-16
-# Last update: 2019-08-02
+# Last update: 2019-08-08
 ###########################################
-# x <- "Beispielprojekt.epx"
-# x <- "./samples/Clinical_Example.epx"
 
 read.EpiData <- function(x, raw.data = FALSE){
   

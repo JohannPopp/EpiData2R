@@ -15,7 +15,7 @@ epx.extract <- function(x){
   infoEpiData <- xml2::xml_find_all(epx, "//EpiData")
   infoStudy <- xml2::xml_find_all(epx, "//StudyInfo")
   infoSeparators <- unlist(xml2::xml_attrs(xml2::xml_find_all(epx, "//Settings")))
-
+  
   infoDataSets <- xml2::xml_find_all(epx, "//DataFile")
   infoParentDataSet <- lapply(
     xml2::xml_find_all(epx, "//DataFileRelation"), 
@@ -28,10 +28,10 @@ epx.extract <- function(x){
       xml2::xml_find_all(epx, "//KeyFields"), 
       function(x) xml2::xml_attr(xml2::xml_children(x), "fieldRef")), 
     paste, collapse = ";;")
-
-
   
-
+  
+  
+  
   # Extract information for each data set
   epxExtractDataSet <- function(df){
     
@@ -64,22 +64,22 @@ epx.extract <- function(x){
     
     # Key variables
     # keyVars <- xml2::xml_attr(xml2::xml_find_all(df,  ".//Key"), "fieldRef")
-
-
+    
+    
     # Gather information in a list
     list(records = records, datFields = datFields, fieldNames = fieldNames, fieldLabels = fieldLabels, 
          fieldTypes = fieldTypes, fieldValLabSets = fieldValLabSets, valLabelSets = valLabelSets,
          valLabels = valLabels, infoSeparators = infoSeparators)
     
   }
-
+  
   perDataSet <- lapply(infoDataSets, epxExtractDataSet)
   names(perDataSet) <- xml2::xml_attr(infoDataSets, "id")
-
-
-
-
-
+  
+  
+  
+  
+  
   # Gather information in a list
   list(epx = epx, infoEpiData = infoEpiData, infoStudy = infoStudy, infoSeparators = infoSeparators,
        infoDataSets = infoDataSets, infoParentDataSet = infoParentDataSet,
