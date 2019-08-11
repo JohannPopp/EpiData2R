@@ -188,6 +188,11 @@ read.EpiData <- function(x, raw.data = FALSE){
                              paste, collapse = "|")
     missingsPerVar[missingsPerVar == ""] <- NA
 
+    # missingsPerVar <- missingCodes[as.numeric(paste(indexValLabSet))]
+    missingsPerVar <- lapply(missingCodes[as.numeric(paste(indexValLabSet))],
+                             paste, collapse = "|")
+    missingsPerVar[missingsPerVar == ""] <- NA
+    
     # Convert defined missing values into NA
     dat[
       mapply(function(x, y){
