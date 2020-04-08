@@ -41,19 +41,23 @@ epx.class <- function(x, info){
   
   
   # Replace value codes with value labels
-  dat <- as.data.frame(
-    mapply(
-      function(x, y, z){
-        if(!is.na(y) & (z == "ftInteger" | z == "ftFloat")){
-          # if(z == "ftInteger"|z == "ftFloat"){
-          validLabels[[y]][as.numeric(lapply(x, function(x)  which(x == validValCodes[[y]])))]
-        } else {
-          if(!is.na(y) & z == "ftString"){
-            validLabels[[y]][order(validValCodes[[y]])][factor(x)]
-          } else {x}
-        }
-      }, 
-      x = dat, y = indexValLabelSet, z = fieldTypes),
+  withLabels <- mapply(
+    function(x, y, z){
+      if(!is.na(y) & (z == "ftInteger" | z == "ftFloat")){
+        # if(z == "ftInteger"|z == "ftFloat"){
+        validLabels[[y]][as.numeric(lapply(x, function(x)  which(x == validValCodes[[y]])))]
+      } else {
+        if(!is.na(y) & z == "ftString"){
+          validLabels[[y]][order(validValCodes[[y]])][factor(x)]
+        } else {x}
+      }
+    }, 
+    x = dat, y = indexValLabelSet, z = fieldTypes)
+  
+  if(dim(dat)[1] == 1){
+    withLabels <- t(withLabels)
+  }
+  dat <- as.data.frame(withLabels,
     stringsAsFactors = FALSE)
   
   

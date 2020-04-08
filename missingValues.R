@@ -3,7 +3,7 @@
 
 # Johann Popp
 # 2019-06-09
-# Last modification: 2019-07-25
+# Last modification: 2020-04-08
 ###########################################
 
 
@@ -26,13 +26,21 @@ epx.missing <- function(dat, info){
   missingsPerVar[missingsPerVar == ""] <- NA
   
   # Convert defined missing values into NA
-  dat[
-    mapply(function(x, y){
-      grepl(y, x)
-    },
-    x = dat, 
-    y = missingsPerVar) == 1
-    ] <- NA
+  ## Identify defined missings
+  defMiss <- mapply(function(x, y) {
+    grepl(y, x)
+  },
+  x = dat,
+  y = missingsPerVar) == 1
+  ## Convert to NA
+  if(is.data.frame(dat)){
+    if(dim(dat)[1] == 1){
+      dat[t(defMiss)] <- NA
+    } else {
+      dat[defMiss] <- NA
+    }
+  }
+    
 
   # Convert undefined missing values in text fields (expressed as "NA") into NA
   dat[dat == "NA"] <- NA

@@ -26,7 +26,9 @@ read.EpiData <- function(x, raw.data = FALSE){
   dat <- lapply(info[[7]], epx.read)
 
   # Combine dat and info in a data-set-wise list
-  perDataSet <- mapply(function(dat, info) list(list(dat = dat, info = info)), dat, info[[7]])
+  perDataSet <- mapply(function(dat, info) {
+    list(list(dat = dat, info = info))}, 
+    dat, info[[7]])
   
   suppressWarnings(
     if(raw.data == FALSE){

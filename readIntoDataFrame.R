@@ -3,7 +3,7 @@
 
 # Johann Popp
 # 2019-06-23
-# Last update: 2019-08-02
+# Last update: 2020-04-08
 ###########################################
 
 epx.read <- function(x){
@@ -38,14 +38,14 @@ epx.read <- function(x){
   } else {
     if(sum(grepl(characterPattern, fieldTypes)) > 1) {
       dat[,grepl(characterPattern, fieldTypes)] <-
-        as.data.frame(
+        # as.data.frame(
           apply(dat[,grep("ftString|ftMemo|ftUpperString", fieldTypes)], 
                 2, 
                 function(x){ 
                   x <- gsub("^\"|\"$", "", x)
                 }
-          ), 
-          stringsAsFactors = FALSE)
+          )#, 
+          # stringsAsFactors = FALSE)
     }
   }
  

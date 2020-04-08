@@ -142,14 +142,14 @@ read.EpiData <- function(x, raw.data = FALSE){
       } else {
         if(sum(grepl(characterPattern, fieldTypes)) > 1) {
           dat[,grepl(characterPattern, fieldTypes)] <-
-            as.data.frame(
+            # as.data.frame(
               apply(dat[,grep("ftString|ftMemo|ftUpperString", fieldTypes)], 
                     2, 
                     function(x){ 
                       x <- gsub("^\"|\"$", "", x)
                     }
-              ), 
-              stringsAsFactors = FALSE)
+              )#, 
+              # stringsAsFactors = FALSE)
         }
       }
       
@@ -194,13 +194,27 @@ read.EpiData <- function(x, raw.data = FALSE){
     missingsPerVar[missingsPerVar == ""] <- NA
     
     # Convert defined missing values into NA
-    dat[
-      mapply(function(x, y){
-        grepl(y, x)
-      },
-      x = dat, 
-      y = missingsPerVar) == 1
-      ] <- NA
+    # dat[
+    #   mapply(function(x, y){
+    #     grepl(y, x)
+    #   },
+    #   x = dat, 
+    #   y = missingsPerVar) == 1
+    #   ] <- NA
+    ## Identify defined missings
+    defMiss <- mapply(function(x, y) {
+      grepl(y, x)
+    },
+    x = dat,
+    y = missingsPerVar) == 1
+    ## Convert to NA
+    if(is.data.frame(dat)){
+      if(dim(dat)[1] == 1){
+        dat[t(defMiss)] <- NA
+      } else {
+        dat[defMiss] <- NA
+      }
+    }
     
     # Convert undefined missing values in text fields (expressed as "NA") into NA
     dat[dat == "NA"] <- NA
@@ -243,21 +257,38 @@ read.EpiData <- function(x, raw.data = FALSE){
     )
     
     # Replace value codes with value labels
-    dat <- as.data.frame(
-      mapply(
-        function(x, y, z){
-          if(!is.na(y) & (z == "ftInteger" | z == "ftFloat")){
-            # if(z == "ftInteger"|z == "ftFloat"){
-            validLabels[[y]][as.numeric(lapply(x, function(x)  which(x == validValCodes[[y]])))]
-          } else {
-            if(!is.na(y) & z == "ftString"){
-              validLabels[[y]][order(validValCodes[[y]])][factor(x)]
-            } else {x}
-          }
-        }, 
-        x = dat, y = indexValLabelSet, z = fieldTypes),
-      stringsAsFactors = FALSE)
+    # dat <- as.data.frame(
+    #   mapply(
+    #     function(x, y, z){
+    #       if(!is.na(y) & (z == "ftInteger" | z == "ftFloat")){
+    #         # if(z == "ftInteger"|z == "ftFloat"){
+    #         validLabels[[y]][as.numeric(lapply(x, function(x)  which(x == validValCodes[[y]])))]
+    #       } else {
+    #         if(!is.na(y) & z == "ftString"){
+    #           validLabels[[y]][order(validValCodes[[y]])][factor(x)]
+    #         } else {x}
+    #       }
+    #     }, 
+    #     x = dat, y = indexValLabelSet, z = fieldTypes),
+    #   stringsAsFactors = FALSE)
+    withLabels <- mapply(
+      function(x, y, z){
+        if(!is.na(y) & (z == "ftInteger" | z == "ftFloat")){
+          # if(z == "ftInteger"|z == "ftFloat"){
+          validLabels[[y]][as.numeric(lapply(x, function(x)  which(x == validValCodes[[y]])))]
+        } else {
+          if(!is.na(y) & z == "ftString"){
+            validLabels[[y]][order(validValCodes[[y]])][factor(x)]
+          } else {x}
+        }
+      }, 
+      x = dat, y = indexValLabelSet, z = fieldTypes)
     
+    if(dim(dat)[1] == 1){
+      withLabels <- t(withLabels)
+    }
+    dat <- as.data.frame(withLabels,
+                         stringsAsFactors = FALSE)
     
     
     # Convert integer fields
